@@ -1,0 +1,60 @@
+<nav class="bg-white border-b border-gray-100">
+
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-black flex items-center justify-center text-white font-bold">
+        <img
+  src="/EasyGo/public/logo.svg"
+  alt="EasyGo"
+  class="w-130 h-150"
+/>
+      </div>
+
+      <span class="font-semibold text-gray-800">
+        EasyGo
+      </span>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-sm text-gray-600">
+      <a href="#" class="hover:text-black">Home</a>
+      <a href="#" class="hover:text-black">About</a>
+      <a href="#" class="hover:text-black">Contact</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+
+      <input
+        type="text"
+        placeholder="Search products"
+        class="hidden md:block border border-gray-300 rounded-full
+               px-4 py-2 text-sm outline-none"
+      >
+
+      <div class="relative">
+        <span class="text-xl">🛒</span>
+
+        @if (cartCount > 0) {
+          <span
+            class="absolute -top-2 -right-2
+                   bg-indigo-600 text-white text-xs
+                   w-5 h-5 rounded-full
+                   flex items-center justify-center"
+          >
+            {{ cartCount }}
+          </span>
+        }
+      </div>
+
+      <button
+        class="bg-indigo-600 text-white text-sm
+               px-5 py-2 rounded-full hover:bg-indigo-700"
+      >
+        Login
+      </button>
+
+    </div>
+
+  </div>
+
+</nav>

@@ -1,0 +1,31 @@
+<div
+  class="bg-white rounded-2xl border border-gray-200 p-4 text-center
+         hover:-translate-y-1 hover:shadow-md transition duration-200"
+>
+
+  <div class="h-56 flex items-center justify-center mb-4">
+    <img
+      class="max-h-52 max-w-full object-contain"
+      src="{{ imageUrl }}"
+      alt="{{ name }}"
+    >
+  </div>
+
+  <h3 class="text-sm font-medium text-gray-900">
+    {{ name }}
+  </h3>
+
+  <p class="text-sm text-gray-500 mt-1">
+    $ {{ price }}
+  </p>
+
+  <button
+    (click)="notifyAddToCart()"
+    class="mt-4 px-5 py-2 text-sm text-gray-600
+           border border-gray-300 rounded-full
+           hover:bg-gray-100 transition"
+  >
+    🛒 Add to cart
+  </button>
+
+</div>
