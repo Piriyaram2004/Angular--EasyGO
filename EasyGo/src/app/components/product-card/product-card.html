@@ -3,29 +3,75 @@
          hover:-translate-y-1 hover:shadow-md transition duration-200"
 >
 
+  <!-- Product Image -->
   <div class="h-56 flex items-center justify-center mb-4">
+
     <img
       class="max-h-52 max-w-full object-contain"
-      src="{{ imageUrl }}"
-      alt="{{ name }}"
+      [src]="imageUrl"
+      [alt]="name"
     >
+
   </div>
 
+  <!-- Product Name -->
   <h3 class="text-lg font-medium text-gray-900">
     {{ name }}
   </h3>
 
+  <!-- Price -->
   <p class="text-lg text-gray-500 mt-1">
     $ {{ price }}
   </p>
 
-  <button
-    (click)="notifyAddToCart()"
-    class="mt-4 px-5 py-2 text-sm text-gray-600
-           border border-gray-300 rounded-full
-           hover:bg-gray-100 transition"
-  >
-    🛒 Add to cart
-  </button>
+  <!-- Delivery Total -->
+  <p class="text-gray-400 text-xs">
+    Total incl. delivery: $ {{ price + 50 }}
+  </p>
+
+  <!-- Stock Condition -->
+  @if (inStock) {
+
+    <div class="flex items-center justify-center gap-2 mt-4">
+
+      <!-- Quantity -->
+      <input
+        #qtyInput
+        type="number"
+        value="1"
+        min="1"
+        max="10"
+        class="w-14 text-center text-sm
+               border border-gray-200
+               rounded-full py-1 outline-none"
+      />
+
+      <!-- Add to Cart -->
+      <button
+        class="inline-flex items-center gap-1.5
+               border text-sm text-gray-500
+               border-gray-200 hover:bg-gray-100
+               transition cursor-pointer
+               px-5 py-1 rounded-full"
+        (click)="notifyAddToCart(qtyInput.value)"
+      >
+
+        🛒
+
+        <span>
+          Add to cart
+        </span>
+
+      </button>
+
+    </div>
+
+  } @else {
+
+    <p class="text-sm text-red-500 font-medium mt-5">
+      Out of Stock
+    </p>
+
+  }
 
 </div>

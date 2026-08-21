@@ -12,14 +12,13 @@ import { Navbar } from './components/navbar/navbar';
 })
 export class App {
   protected readonly title = signal('EasyGo');
+  protected readonly searchTerm = signal('');
 
   cartCount = 0;
-
-handleAddToCart(productName: string) {
-  this.cartCount++;
-
-  console.log(
-    `${productName} added to cart. Total: ${this.cartCount}`
-  );
+onSearchChange(term: string) {
+  this.searchTerm.set(term);
+}
+handleAddToCart(item: { name: string; qty: number }) {
+  this.cartCount += item.qty;
 }
 }

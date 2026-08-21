@@ -2,37 +2,76 @@
 
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
- <div class="flex items-center">
-<a routerLink="/" class="cursor-pointer">
-  <img
-    src="/logo.svg"
-    alt="EasyGo Home"
-    class="w-35 h-auto"
-  />
-</a>
-</div>
-
-    <div class="hidden md:flex items-center gap-8 text-md font-semibold  text-gray-600">
-      <a href="/" class="hover:text-black cursor-pointer">
-  Home
-</a>
-     <a href="#" class="hover:text-black ">About</a>
-      <a href="#" class="hover:text-black">Contact</a>
+    <!-- Logo -->
+    <div class="flex items-center">
+      <a routerLink="/" class="cursor-pointer">
+        <img
+          src="/logo.svg"
+          alt="EasyGo Home"
+          class="w-35 h-auto"
+        />
+      </a>
     </div>
 
+    <!-- Navigation Links -->
+    <div class="hidden md:flex items-center gap-8 text-md font-semibold text-gray-600">
+      <a routerLink="/" class="hover:text-black cursor-pointer">
+        Home
+      </a>
+
+      <a href="#" class="hover:text-black">
+        About
+      </a>
+
+      <a href="#" class="hover:text-black">
+        Contact
+      </a>
+    </div>
+
+    <!-- Right Section -->
     <div class="flex items-center gap-4">
 
-      <input
-        type="text"
-        placeholder="Search products"
-        class="hidden md:block border border-gray-300 rounded-full
-               px-4 py-2 text-sm outline-none"
-      >
+      <!-- Search -->
+      <div class="hidden md:flex items-center border border-gray-300 rounded-full px-4 py-2">
 
+        <input
+          type="text"
+          placeholder="Search products"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+          class="bg-transparent text-sm outline-none"
+        >
+
+        @if (searchTerm) {
+
+          <button
+            type="button"
+            (click)="clearSearch()"
+            aria-label="Clear search"
+            class="ml-2 cursor-pointer text-gray-400 hover:text-gray-600 transition"
+          >
+            &#10005;
+          </button>
+
+        } @else {
+
+          <span class="ml-2 text-gray-400">
+            🔍
+          </span>
+
+        }
+
+      </div>
+
+      <!-- Cart -->
       <div class="relative">
-        <span class="text-xl">🛒</span>
+
+        <span class="text-xl">
+          🛒
+        </span>
 
         @if (cartCount > 0) {
+
           <span
             class="absolute -top-2 -right-2
                    bg-indigo-600 text-white text-xs
@@ -41,18 +80,21 @@
           >
             {{ cartCount }}
           </span>
+
         }
+
       </div>
 
+      <!-- Login -->
       <button
         class="bg-indigo-600 text-white text-sm
-               px-5 py-2 rounded-full hover:bg-indigo-700"
+               px-5 py-2 rounded-full
+               hover:bg-indigo-700 transition"
       >
         Login
       </button>
 
     </div>
-    <hr>
 
   </div>
 

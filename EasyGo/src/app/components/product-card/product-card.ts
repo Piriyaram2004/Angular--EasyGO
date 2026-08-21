@@ -10,9 +10,15 @@ export class ProductCard {
   @Input() name = '';
   @Input () price = 0;
   @Input () imageUrl = '';
-  @Output() addToCart = new EventEmitter<string>();
-  notifyAddToCart() {
-  this.addToCart.emit(this.name);
+  @Input() inStock: boolean = true;
+@Output() addToCart =
+  new EventEmitter<{ name: string; qty: number }>();
+
+notifyAddToCart(qty: string) {
+  this.addToCart.emit({
+    name: this.name,
+    qty: Number(qty) || 1
+  });
 }
-;
 }
+
