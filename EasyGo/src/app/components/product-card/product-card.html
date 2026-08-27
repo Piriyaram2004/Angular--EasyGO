@@ -1,7 +1,8 @@
 <div
-  class="bg-white rounded-2xl border border-gray-200 p-4 text-center
-         hover:-translate-y-1 hover:shadow-md transition duration-200"
->
+  [ngStyle]="{ opacity: inStock ? 1 : 0.65 }"
+  class="bg-white rounded-2xl pb-4 overflow-hidden border border-gray-200
+         hover:-translate-y-1 transition duration-300"
+ appHighlight>
 
   <!-- Product Image -->
   <div class="h-56 flex items-center justify-center mb-4">
@@ -16,19 +17,52 @@
 
   <!-- Product Name -->
   <h3 class="text-lg font-medium text-gray-900">
-    {{ name }}
+    {{ name | uppercase}}
   </h3>
+  <p
+  class="stock-badge"
+  [ngClass]="{
+    'available': inStock,
+    'out-of-stock': !inStock
+  }"
+>
+  {{ inStock ? 'In Stock' : 'Out of Stock' }}
+</p>
 
   <!-- Price -->
-  <p class="text-lg text-gray-500 mt-1">
-    $ {{ price }}
-  </p>
+ <p class="text-lg text-gray-500 mt-1">
+  {{ priceInLkr | currency:'LKR':'Rs. ':'1.0-0' }}
+</p>
 
   <!-- Delivery Total -->
-  <p class="text-gray-400 text-xs">
-    Total incl. delivery: $ {{ price + 50 }}
-  </p>
+<p class="text-gray-400 text-xs">
+  Total incl. delivery: Rs. {{ totalInLkr | number:'1.0-0' }}
+</p>
+<!-- ------------------------------------------------------- -->
+<p class="text-gray-500 text-xs text-center mt-3 px-2">
 
+  @if (showFullDescription) {
+
+    {{ description }}
+
+  } @else {
+
+    {{ description | shortText }}
+
+  }
+
+</p>
+
+@if (description.length > 20) {
+
+  <button
+    (click)="toggleDescription()"
+    class="text-xs text-indigo-500 hover:text-indigo-600 mt-1 cursor-pointer"
+  >
+    {{ showFullDescription ? 'View less' : 'View more' }}
+  </button>
+
+}
   <!-- Stock Condition -->
   @if (inStock) {
 
@@ -66,12 +100,8 @@
 
     </div>
 
-  } @else {
+  } 
 
-    <p class="text-sm text-red-500 font-medium mt-5">
-      Out of Stock
-    </p>
-
-  }
+  
 
 </div>

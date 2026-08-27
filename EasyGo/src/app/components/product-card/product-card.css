@@ -18,3 +18,24 @@
   border-radius: 20px;
   cursor: pointer;
 }
+
+.stock-badge {
+  display: inline-block;
+  margin-top: 8px;
+  margin-left: 50px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.available {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.out-of-stock {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}

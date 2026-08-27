@@ -1,24 +1,64 @@
-import { Component , Input , Output , EventEmitter} from '@angular/core';
+import {
+  Component,
+  Input
+} from '@angular/core';
+
+import {
+  NgClass,
+  NgStyle,
+  UpperCasePipe,
+  CurrencyPipe,
+  DecimalPipe
+} from '@angular/common';
+
+import { Highlight } from '../../directives/highlight';
+import { ShortTextPipe } from '../../pipes/short-text-pipe';
+import { ProductService } from '../../services/product-service';
 
 @Component({
   selector: 'app-product-card',
-  imports: [],
+  imports: [
+    NgClass,
+    NgStyle,
+    UpperCasePipe,
+    CurrencyPipe,
+    DecimalPipe,
+    Highlight,
+    ShortTextPipe
+  ],
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
 export class ProductCard {
+
   @Input() name = '';
-  @Input () price = 0;
-  @Input () imageUrl = '';
-  @Input() inStock: boolean = true;
-@Output() addToCart =
-  new EventEmitter<{ name: string; qty: number }>();
+  @Input() price = 0;
+  @Input() imageUrl = '';
+  @Input() inStock = true;
+  @Input() description = '';
 
-notifyAddToCart(qty: string) {
-  this.addToCart.emit({
-    name: this.name,
-    qty: Number(qty) || 1
-  });
-}
-}
+  showFullDescription = false;
 
+  readonly usdToLkr = 320;
+
+  constructor(private productService: ProductService) {}
+
+  get priceInLkr() {
+    return this.price * this.usdToLkr;
+  }
+
+  get totalInLkr() {
+    return (this.price + 50) * this.usdToLkr;
+  }
+
+  toggleDescription() {
+    this.showFullDescription = !this.showFullDescription;
+  }
+
+  notifyAddToCart(qty: string) {
+    this.productService.addToCart(
+      this.name,
+      Number(qty) || 1
+    );
+  }
+}
