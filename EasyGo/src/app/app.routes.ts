@@ -10,6 +10,7 @@ import { ProductList } from './components/product-list/product-list';
 import { Cart } from './pages/cart/cart';
 import { Login } from './pages/login/login';
 
+
 export const routes: Routes = [
 
   // =========================================================
@@ -24,7 +25,7 @@ export const routes: Routes = [
 
 
   // =========================================================
-  // HOME PAGE
+  // HOME
   // =========================================================
 
   {
@@ -49,9 +50,7 @@ export const routes: Routes = [
         component: ProductList
       },
 
-
       // /products/:id
-      // Lazy-loaded Product Details
       {
         path: ':id',
 
@@ -85,7 +84,7 @@ export const routes: Routes = [
 
 
   // =========================================================
-  // ABOUT PAGE
+  // ABOUT
   // =========================================================
 
   {
@@ -95,7 +94,7 @@ export const routes: Routes = [
 
 
   // =========================================================
-  // UNKNOWN ROUTES
+  // 404 / NOT FOUND
   // =========================================================
 
   {
