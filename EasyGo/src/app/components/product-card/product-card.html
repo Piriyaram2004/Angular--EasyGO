@@ -2,68 +2,102 @@
   [ngStyle]="{ opacity: inStock ? 1 : 0.65 }"
   class="bg-white rounded-2xl pb-4 overflow-hidden border border-gray-200
          hover:-translate-y-1 transition duration-300"
- appHighlight>
+  appHighlight
+>
 
   <!-- Product Image -->
-  <div class="h-56 flex items-center justify-center mb-4">
+  <div
+    class="h-56 flex items-center justify-center mb-4 cursor-pointer"
+    [routerLink]="['/products', productId]"
+  >
 
     <img
       class="max-h-52 max-w-full object-contain"
       [src]="imageUrl"
       [alt]="name"
-    >
+    />
 
   </div>
 
+
   <!-- Product Name -->
-  <h3 class="text-lg font-medium text-gray-900">
-    {{ name | uppercase}}
+  <h3
+    class="text-lg font-medium text-gray-900 cursor-pointer hover:text-indigo-600"
+    [routerLink]="['/products', productId]"
+  >
+    {{ name | uppercase }}
   </h3>
+
+
+  <!-- Stock Status -->
   <p
-  class="stock-badge"
-  [ngClass]="{
-    'available': inStock,
-    'out-of-stock': !inStock
-  }"
->
-  {{ inStock ? 'In Stock' : 'Out of Stock' }}
-</p>
+    class="stock-badge"
+    [ngClass]="{
+      'available': inStock,
+      'out-of-stock': !inStock
+    }"
+  >
+    {{ inStock ? 'In Stock' : 'Out of Stock' }}
+  </p>
+
 
   <!-- Price -->
- <p class="text-lg text-gray-500 mt-1">
-  {{ priceInLkr | currency:'LKR':'Rs. ':'1.0-0' }}
-</p>
+  <p class="text-lg text-gray-500 mt-1">
+    {{ priceInLkr | currency:'LKR':'Rs. ':'1.0-0' }}
+  </p>
+
 
   <!-- Delivery Total -->
-<p class="text-gray-400 text-xs">
-  Total incl. delivery: Rs. {{ totalInLkr | number:'1.0-0' }}
-</p>
-<!-- ------------------------------------------------------- -->
-<p class="text-gray-500 text-xs text-center mt-3 px-2">
+  <p class="text-gray-400 text-xs">
+    Total incl. delivery:
+    Rs. {{ totalInLkr | number:'1.0-0' }}
+  </p>
 
-  @if (showFullDescription) {
 
-    {{ description }}
+  <!-- Product Description -->
+  <p class="text-gray-500 text-xs text-center mt-3 px-2">
 
-  } @else {
+    @if (showFullDescription) {
 
-    {{ description | shortText }}
+      {{ description }}
+
+    } @else {
+
+      {{ description | shortText }}
+
+    }
+
+  </p>
+
+
+  <!-- View More / View Less -->
+  @if (description.length > 20) {
+
+    <button
+      (click)="toggleDescription()"
+      class="text-xs text-indigo-500 hover:text-indigo-600
+             mt-1 cursor-pointer"
+    >
+      {{ showFullDescription ? 'View less' : 'View more' }}
+    </button>
 
   }
 
-</p>
 
-@if (description.length > 20) {
+  <!-- Product Details Link -->
+  <div class="text-center mt-2">
 
-  <button
-    (click)="toggleDescription()"
-    class="text-xs text-indigo-500 hover:text-indigo-600 mt-1 cursor-pointer"
-  >
-    {{ showFullDescription ? 'View less' : 'View more' }}
-  </button>
+    <a
+      [routerLink]="['/products', productId]"
+      class="text-xs text-indigo-500 hover:text-indigo-700 cursor-pointer"
+    >
+      View product
+    </a>
 
-}
-  <!-- Stock Condition -->
+  </div>
+
+
+  <!-- Add To Cart -->
   @if (inStock) {
 
     <div class="flex items-center justify-center gap-2 mt-4">
@@ -80,7 +114,8 @@
                rounded-full py-1 outline-none"
       />
 
-      <!-- Add to Cart -->
+
+      <!-- Add To Cart -->
       <button
         class="inline-flex items-center gap-1.5
                border text-sm text-gray-500
@@ -100,8 +135,6 @@
 
     </div>
 
-  } 
-
-  
+  }
 
 </div>

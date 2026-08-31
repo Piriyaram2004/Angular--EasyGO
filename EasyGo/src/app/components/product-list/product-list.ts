@@ -3,9 +3,10 @@ import {
   OnInit,
   OnChanges,
   OnDestroy,
-  SimpleChanges,
-  Input
+  SimpleChanges
 } from '@angular/core';
+
+import { ActivatedRoute } from '@angular/router';
 
 import {
   Product,
@@ -22,14 +23,31 @@ import { ProductCard } from '../product-card/product-card';
 })
 export class ProductList implements OnInit, OnChanges, OnDestroy {
 
-  @Input() searchTerm = '';
-
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  category = '';
 
-  ngOnInit() {
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
+
+  get currentSearchTerm(): string {
+    return this.productService.getSearchTerm();
+  }
+
+  ngOnInit(): void {
+
     this.products = this.productService.getProducts();
+
+    // Read category from URL
+    this.route.queryParams.subscribe(params => {
+
+      this.category = params['category'] || '';
+
+      console.log('Category:', this.category);
+
+    });
 
     console.log(
       'Product List initialized with',
@@ -38,15 +56,31 @@ export class ProductList implements OnInit, OnChanges, OnDestroy {
     );
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges): void {
     console.log('Product List changed');
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     console.log('Product List destroyed');
   }
 
   get filteredProducts(): Product[] {
-    return this.productService.searchProducts(this.searchTerm);
+
+    let result = this.productService.searchProducts(
+      this.productService.getSearchTerm()
+    );
+
+    // Apply category filter
+    if (this.category) {
+
+      result = result.filter(
+        product =>
+          product.category.toLowerCase() ===
+          this.category.toLowerCase()
+      );
+
+    }
+
+    return result;
   }
 }

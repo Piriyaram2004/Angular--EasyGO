@@ -1,25 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+
 import {
-  Component,
-  signal
-} from '@angular/core';
+  NavigationEnd,
+  Router,
+  RouterOutlet
+} from '@angular/router';
+
+import { filter } from 'rxjs';
 
 import { Navbar } from './components/navbar/navbar';
-import { ProductList } from './components/product-list/product-list';
 
 @Component({
   selector: 'app-root',
+
   imports: [
     Navbar,
-    ProductList
+    RouterOutlet
   ],
+
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
 
-  protected readonly searchTerm = signal('');
+  currentUrl = '';
 
-  onSearchChange(term: string) {
-    this.searchTerm.set(term);
+  constructor(
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+
+    this.router.events
+      .pipe(
+        filter(
+          event => event instanceof NavigationEnd
+        )
+      )
+      .subscribe(event => {
+
+        this.currentUrl =
+          event.urlAfterRedirects;
+
+        console.log(
+          'Navigation completed:',
+          this.currentUrl
+        );
+
+      });
+
   }
+
 }

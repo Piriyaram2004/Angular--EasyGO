@@ -1,0 +1,56 @@
+<div class="px-6 md:px-16 lg:px-24 xl:px-32 py-10">
+
+  <a
+    routerLink="/products"
+    class="text-sm text-indigo-500 hover:text-indigo-700"
+  >
+    &larr; Back to products
+  </a>
+
+  @if (product) {
+
+    <div class="mt-8">
+
+      <p class="text-xs text-gray-400">
+        Product ID: {{ productId }}
+      </p>
+
+      <h1 class="text-3xl font-semibold mt-2">
+        {{ product.name }}
+      </h1>
+
+      <img
+        class="w-72 h-72 p-5 object-contain mt-6"
+        [src]="product.imageUrl"
+        [alt]="product.name"
+      >
+
+      <p class="text-2xl text-gray-700 mt-4">
+        Rs. {{ product.price }}
+      </p>
+
+      <p class="text-gray-500 mt-4 max-w-xl">
+        {{ product.description }}
+      </p>
+
+      @if (product.inStock) {
+        <p class="text-green-600 font-medium mt-4">
+          In Stock
+        </p>
+      } @else {
+        <p class="text-red-500 font-medium mt-4">
+          Out of Stock
+        </p>
+      }
+
+    </div>
+
+  } @else {
+
+    <p class="text-gray-500 mt-8">
+      No product has id {{ productId }}.
+    </p>
+
+  }
+
+</div>

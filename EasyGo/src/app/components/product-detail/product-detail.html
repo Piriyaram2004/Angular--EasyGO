@@ -1,0 +1,107 @@
+<div class="max-w-5xl mx-auto px-6 py-12">
+
+  @if (product) {
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- Product Image -->
+      <div
+        class="flex items-center justify-center
+               bg-white rounded-2xl
+               border border-gray-200
+               p-8"
+      >
+
+        <img
+          [src]="product.imageUrl"
+          [alt]="product.name"
+          class="max-h-96 max-w-full object-contain"
+        />
+
+      </div>
+
+
+      <!-- Product Information -->
+      <div>
+
+        <!-- Product Name -->
+        <h1 class="text-3xl font-semibold text-gray-900">
+          {{ product.name }}
+        </h1>
+
+
+        <!-- Stock -->
+        <p
+          class="inline-block mt-4 px-4 py-2 rounded-full text-sm"
+          [class.bg-green-100]="product.inStock"
+          [class.text-green-700]="product.inStock"
+          [class.bg-red-100]="!product.inStock"
+          [class.text-red-700]="!product.inStock"
+        >
+          {{ product.inStock ? 'In Stock' : 'Out of Stock' }}
+        </p>
+
+
+        <!-- Price -->
+        <p class="text-2xl text-gray-600 mt-6">
+          ${{ product.price }}
+        </p>
+
+
+        <!-- Description -->
+        <p class="text-gray-500 mt-6 leading-7">
+          {{ product.description }}
+        </p>
+
+
+        <!-- Category -->
+        <p class="text-sm text-gray-400 mt-4">
+          Category: {{ product.category }}
+        </p>
+
+
+        <!-- Back Button -->
+        <a
+          routerLink="/products"
+          class="inline-block mt-8
+                 border border-gray-200
+                 rounded-full
+                 px-6 py-2
+                 text-sm text-gray-600
+                 hover:bg-gray-100
+                 cursor-pointer"
+        >
+          ← Back to products
+        </a>
+
+      </div>
+
+    </div>
+
+  } @else {
+
+    <!-- Product Not Found -->
+
+    <div class="text-center py-20">
+
+      <h2 class="text-2xl font-semibold text-gray-700">
+        Product not found
+      </h2>
+
+      <p class="text-gray-400 mt-2">
+        The product you are looking for does not exist.
+      </p>
+
+      <a
+        routerLink="/products"
+        class="inline-block mt-6
+               text-indigo-500 hover:text-indigo-700"
+      >
+        Back to products
+      </a>
+
+    </div>
+
+  }
+
+</div>

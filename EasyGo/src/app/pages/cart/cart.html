@@ -1,0 +1,322 @@
+<div class="max-w-5xl mx-auto px-6 py-10">
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+  <div
+    class="flex flex-col md:flex-row
+           md:items-center
+           md:justify-between
+           gap-4
+           mb-8"
+  >
+
+    <div>
+
+      <h1
+        class="text-3xl
+               font-semibold
+               text-gray-800"
+      >
+        Your Cart
+      </h1>
+
+      <p
+        class="text-sm
+               text-gray-500
+               mt-2"
+      >
+        {{ cartCount }}
+        {{ cartCount === 1 ? 'item' : 'items' }}
+        in your cart
+      </p>
+
+    </div>
+
+
+    <!-- Logout -->
+
+    <button
+      type="button"
+      (click)="logout()"
+      class="border
+             border-gray-300
+             text-gray-600
+             px-5 py-2
+             rounded-full
+             hover:bg-gray-100
+             transition
+             cursor-pointer"
+    >
+      Logout
+    </button>
+
+  </div>
+
+
+  <!-- ===================================================== -->
+  <!-- EMPTY CART -->
+  <!-- ===================================================== -->
+
+  @if (cartItems.length === 0) {
+
+    <div
+      class="border
+             border-gray-200
+             rounded-2xl
+             p-12
+             text-center
+             bg-white"
+    >
+
+      <div class="text-5xl mb-5">
+        🛒
+      </div>
+
+
+      <h2
+        class="text-xl
+               font-semibold
+               text-gray-700"
+      >
+        Your cart is empty
+      </h2>
+
+
+      <p
+        class="text-sm
+               text-gray-400
+               mt-2"
+      >
+        Looks like you haven't added anything yet.
+      </p>
+
+
+      <!-- Continue Shopping -->
+
+      <a
+        routerLink="/products"
+        class="inline-block
+               mt-6
+               bg-indigo-600
+               text-white
+               px-7 py-3
+               rounded-full
+               hover:bg-indigo-700
+               transition"
+      >
+        🛍️ Continue Shopping
+      </a>
+
+    </div>
+
+  }
+
+
+  <!-- ===================================================== -->
+  <!-- CART WITH ITEMS -->
+  <!-- ===================================================== -->
+
+  @else {
+
+    <div class="space-y-4">
+
+
+      <!-- ================================================= -->
+      <!-- CART ITEM -->
+      <!-- ================================================= -->
+
+      @for (
+        item of cartItems;
+        track $index
+      ) {
+
+        <div
+          class="group
+                 flex
+                 items-center
+                 justify-between
+                 gap-4
+                 border
+                 border-gray-200
+                 rounded-2xl
+                 px-5
+                 py-4
+                 bg-white
+                 hover:shadow-sm
+                 transition"
+        >
+
+          <!-- Product information -->
+
+          <div
+            class="flex
+                   items-center
+                   gap-4
+                   min-w-0"
+          >
+
+            <!-- Icon -->
+
+            <div
+              class="w-12
+                     h-12
+                     shrink-0
+                     rounded-full
+                     bg-indigo-50
+                     flex
+                     items-center
+                     justify-center
+                     text-xl"
+            >
+              📱
+            </div>
+
+
+            <!-- Name -->
+
+            <div class="min-w-0">
+
+              <p
+                class="font-medium
+                       text-gray-800
+                       truncate"
+              >
+                {{ item }}
+              </p>
+
+              <p
+                class="text-xs
+                       text-gray-400
+                       mt-1"
+              >
+                EasyGo product
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- Right section -->
+
+          <div
+            class="flex
+                   items-center
+                   gap-3
+                   shrink-0"
+          >
+
+            <!-- Added badge -->
+
+            <span
+              class="hidden sm:inline-flex
+                     bg-green-50
+                     text-green-600
+                     text-xs
+                     font-medium
+                     px-3
+                     py-1
+                     rounded-full"
+            >
+              Added
+            </span>
+
+
+            <!-- Remove -->
+
+            <button
+              type="button"
+              (click)="removeItem($index)"
+              class="text-sm
+                     text-red-500
+                     border
+                     border-red-100
+                     px-3
+                     py-2
+                     rounded-full
+                     hover:bg-red-50
+                     transition
+                     cursor-pointer"
+            >
+              🗑️
+              <span class="hidden sm:inline">
+                Remove
+              </span>
+            </button>
+
+          </div>
+
+        </div>
+
+      }
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- CART ACTIONS -->
+    <!-- ===================================================== -->
+
+    <div
+      class="mt-8
+             pt-6
+             border-t
+             border-gray-200
+             flex
+             flex-col-reverse
+             sm:flex-row
+             sm:items-center
+             sm:justify-between
+             gap-4"
+    >
+
+      <!-- Continue Shopping -->
+
+      <a
+        routerLink="/products"
+        class="inline-flex
+               items-center
+               justify-center
+               gap-2
+               border
+               border-gray-300
+               text-gray-600
+               px-6
+               py-3
+               rounded-full
+               hover:bg-gray-100
+               transition"
+      >
+        ← Continue Shopping
+      </a>
+
+
+      <!-- Cancel All -->
+
+      <button
+        type="button"
+        (click)="cancelShopping()"
+        class="inline-flex
+               items-center
+               justify-center
+               gap-2
+               bg-red-500
+               text-white
+               px-6
+               py-3
+               rounded-full
+               hover:bg-red-600
+               transition
+               cursor-pointer"
+      >
+        🧹
+        Cancel All Shopping
+      </button>
+
+    </div>
+
+  }
+
+</div>

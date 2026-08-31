@@ -11,12 +11,15 @@ import {
   DecimalPipe
 } from '@angular/common';
 
+import { RouterLink } from '@angular/router';
+
 import { Highlight } from '../../directives/highlight';
 import { ShortTextPipe } from '../../pipes/short-text-pipe';
 import { ProductService } from '../../services/product-service';
 
 @Component({
   selector: 'app-product-card',
+
   imports: [
     NgClass,
     NgStyle,
@@ -24,17 +27,25 @@ import { ProductService } from '../../services/product-service';
     CurrencyPipe,
     DecimalPipe,
     Highlight,
-    ShortTextPipe
+    ShortTextPipe,
+    RouterLink,
   ],
+
   templateUrl: './product-card.html',
   styleUrl: './product-card.css',
 })
 export class ProductCard {
 
+  @Input() productId = 0;
+
   @Input() name = '';
+
   @Input() price = 0;
+
   @Input() imageUrl = '';
+
   @Input() inStock = true;
+
   @Input() description = '';
 
   showFullDescription = false;
@@ -56,9 +67,12 @@ export class ProductCard {
   }
 
   notifyAddToCart(qty: string) {
+
     this.productService.addToCart(
       this.name,
       Number(qty) || 1
     );
+
   }
+
 }
