@@ -13,7 +13,7 @@ export class Highlight {
 
   @HostListener('mouseenter')
   onMouseEnter() {
-    this.el.nativeElement.style.background = '#fff3cd';
+    this.el.nativeElement.style.background = '#aed8dd';
   }
 
   @HostListener('mouseleave')

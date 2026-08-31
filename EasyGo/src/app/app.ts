@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import {
   NavigationEnd,
+  NavigationStart,
   Router,
   RouterOutlet
 } from '@angular/router';
-
-import { filter } from 'rxjs';
 
 import { Navbar } from './components/navbar/navbar';
 
@@ -21,33 +20,33 @@ import { Navbar } from './components/navbar/navbar';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-
-  currentUrl = '';
+export class App {
 
   constructor(
     private router: Router
-  ) {}
+  ) {
 
-  ngOnInit(): void {
+    this.router.events.subscribe(event => {
 
-    this.router.events
-      .pipe(
-        filter(
-          event => event instanceof NavigationEnd
-        )
-      )
-      .subscribe(event => {
-
-        this.currentUrl =
-          event.urlAfterRedirects;
+      if (event instanceof NavigationStart) {
 
         console.log(
-          'Navigation completed:',
-          this.currentUrl
+          'Navigation started:',
+          event.url
         );
 
-      });
+      }
+
+      if (event instanceof NavigationEnd) {
+
+        console.log(
+          'Navigation ended:',
+          event.url
+        );
+
+      }
+
+    });
 
   }
 

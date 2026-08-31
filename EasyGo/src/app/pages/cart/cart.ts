@@ -5,12 +5,21 @@ import {
   RouterLink
 } from '@angular/router';
 
-import { ProductService } from '../../services/product-service';
-import { AuthService } from '../../services/auth';
+import {
+  ProductService
+} from '../../services/product-service';
+
+import {
+  AuthService
+} from '../../services/auth';
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink],
+
+  imports: [
+    RouterLink
+  ],
+
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
@@ -46,23 +55,38 @@ export class Cart {
 
 
   // =========================================================
-  // REMOVE ONE ITEM
+  // REMOVE ITEM
   // =========================================================
 
   removeItem(index: number): void {
 
-    this.productService.removeFromCart(index);
+    this.productService.removeFromCart(
+      index
+    );
 
   }
 
 
   // =========================================================
-  // CANCEL ALL SHOPPING
+  // CLEAR ALL
   // =========================================================
 
-  cancelShopping(): void {
+  clearCart(): void {
 
-    this.productService.clearCart();
+    if (this.cartCount === 0) {
+      return;
+    }
+
+    const confirmed =
+      confirm(
+        'Are you sure you want to cancel all shopping and clear your cart?'
+      );
+
+    if (confirmed) {
+
+      this.productService.clearCart();
+
+    }
 
   }
 
@@ -75,7 +99,9 @@ export class Cart {
 
     this.authService.logout();
 
-    this.router.navigate(['/login']);
+    this.router.navigate([
+      '/login'
+    ]);
 
   }
 

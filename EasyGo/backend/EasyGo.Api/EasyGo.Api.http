@@ -1,0 +1,6 @@
+@EasyGo.Api_HostAddress = http://localhost:5169
+
+GET {{EasyGo.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,64 +1,69 @@
-<nav class="bg-white border-b border-gray-100">
+<nav class="bg-white border-b border-gray-100 sticky top-0 z-50">
 
-  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+  <!-- ===================================================== -->
+  <!-- MAIN NAVBAR -->
+  <!-- ===================================================== -->
 
-    <!-- ===================================================== -->
+  <div
+    class="max-w-7xl mx-auto
+           px-4 sm:px-6 lg:px-8
+           h-20
+           flex items-center justify-between"
+  >
+
+    <!-- =================================================== -->
     <!-- LOGO -->
-    <!-- ===================================================== -->
+    <!-- =================================================== -->
 
-    <div class="flex items-center">
-
-      <a
-        routerLink="/"
-        class="cursor-pointer"
-      >
-        <img
-          src="/logo.svg"
-          alt="EasyGo Home"
-          class="w-35 h-auto"
-        />
-      </a>
-
-    </div>
-
-
-    <!-- ===================================================== -->
-    <!-- NAVIGATION LINKS -->
-    <!-- ===================================================== -->
-
-    <div
-      class="hidden md:flex items-center gap-8
-             text-md font-semibold text-gray-600"
+    <a
+      routerLink="/home"
+      (click)="closeMobileMenu()"
+      class="flex items-center shrink-0"
     >
 
-      <!-- Home -->
+      <img
+        src="/logo.svg"
+        alt="EasyGo Home"
+        class="w-32 sm:w-36 h-auto"
+      />
+
+    </a>
+
+
+    <!-- =================================================== -->
+    <!-- DESKTOP NAVIGATION -->
+    <!-- =================================================== -->
+
+    <div
+      class="hidden lg:flex
+             items-center
+             gap-8
+             text-sm
+             font-semibold
+             text-gray-600"
+    >
 
       <a
         routerLink="/home"
         routerLinkActive="link-active"
-        class="hover:text-black cursor-pointer"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
       >
         Home
       </a>
 
-
-      <!-- Products -->
-
       <a
         routerLink="/products"
         routerLinkActive="link-active"
-        class="hover:text-black cursor-pointer"
+        class="nav-link"
       >
         Products
       </a>
 
-
-      <!-- About -->
-
       <a
         routerLink="/about"
         routerLinkActive="link-active"
-        class="hover:text-black cursor-pointer"
+        class="nav-link"
       >
         About
       </a>
@@ -66,90 +71,109 @@
     </div>
 
 
-    <!-- ===================================================== -->
-    <!-- RIGHT SECTION -->
-    <!-- ===================================================== -->
+    <!-- =================================================== -->
+    <!-- DESKTOP RIGHT SECTION -->
+    <!-- =================================================== -->
 
-    <div class="flex items-center gap-4">
+    <div
+      class="hidden lg:flex
+             items-center
+             gap-4"
+    >
 
-
-      <!-- ================================================= -->
-      <!-- SEARCH -->
-      <!-- ================================================= -->
+      <!-- Search -->
 
       <div
-        class="hidden md:flex items-center
-               border border-gray-300
-               rounded-full px-4 py-2"
+        class="flex
+               items-center
+               w-56
+               xl:w-64
+               h-11
+               border
+               border-gray-200
+               rounded-full
+               px-4
+               focus-within:border-indigo-400
+               focus-within:ring-2
+               focus-within:ring-indigo-100
+               transition"
       >
+
+        <span class="text-gray-400 mr-2">
+          🔍
+        </span>
 
         <input
           type="text"
-          placeholder="Search products"
           [(ngModel)]="searchTerm"
           (ngModelChange)="onSearchChange()"
-          class="bg-transparent text-sm outline-none"
-        >
-
-
-        <!-- Clear Search -->
+          placeholder="Search products"
+          class="flex-1
+                 min-w-0
+                 bg-transparent
+                 text-sm
+                 text-gray-700
+                 outline-none
+                 placeholder:text-gray-400"
+        />
 
         @if (searchTerm) {
 
           <button
             type="button"
             (click)="clearSearch()"
+            class="text-gray-400
+                   hover:text-gray-700
+                   cursor-pointer
+                   ml-2"
             aria-label="Clear search"
-            class="ml-2 cursor-pointer
-                   text-gray-400
-                   hover:text-gray-600
-                   transition"
           >
-            &#10005;
+            ✕
           </button>
-
-        }
-
-
-        <!-- Search Icon -->
-
-        @else {
-
-          <span class="ml-2 text-gray-400">
-            🔍
-          </span>
 
         }
 
       </div>
 
 
-      <!-- ================================================= -->
-      <!-- CART -->
-      <!-- ================================================= -->
+      <!-- Cart -->
 
       <a
         routerLink="/cart"
-        routerLinkActive="link-active"
+        class="relative
+               w-11
+               h-11
+               flex
+               items-center
+               justify-center
+               rounded-full
+               hover:bg-gray-100
+               transition
+               cursor-pointer"
         aria-label="Shopping cart"
-        class="relative cursor-pointer
-               text-xl hover:scale-105
-               transition"
       >
 
-        🛒
-
-
-        <!-- Cart Count -->
+        <span class="text-xl">
+          🛒
+        </span>
 
         @if (cartCount > 0) {
 
           <span
-            class="absolute -top-2 -right-2
-                   bg-indigo-600 text-white
-                   text-xs w-5 h-5
+            class="absolute
+                   -top-1
+                   -right-1
+                   min-w-5
+                   h-5
+                   px-1
                    rounded-full
-                   flex items-center justify-center"
+                   bg-indigo-600
+                   text-white
+                   text-xs
+                   font-bold
+                   flex
+                   items-center
+                   justify-center"
           >
             {{ cartCount }}
           </span>
@@ -159,25 +183,247 @@
       </a>
 
 
-      <!-- ================================================= -->
-      <!-- LOGIN -->
-      <!-- ================================================= -->
+      <!-- Login -->
 
       <a
         routerLink="/login"
-        routerLinkActive="link-active"
-        class="bg-indigo-600
-               text-white text-sm
-               px-5 py-2 rounded-full
+        class="inline-flex
+               items-center
+               justify-center
+               px-6
+               h-11
+               rounded-full
+               bg-indigo-600
+               text-white
+               text-sm
+               font-semibold
                hover:bg-indigo-700
-               transition cursor-pointer"
+               transition"
       >
         Login
       </a>
 
+    </div>
+
+
+    <!-- =================================================== -->
+    <!-- MOBILE RIGHT -->
+    <!-- =================================================== -->
+
+    <div class="flex lg:hidden items-center gap-2">
+
+      <!-- Mobile cart -->
+
+      <a
+        routerLink="/cart"
+        aria-label="Shopping cart"
+        class="relative
+               w-10
+               h-10
+               flex
+               items-center
+               justify-center
+               rounded-full
+               hover:bg-gray-100"
+      >
+
+        <span class="text-xl">
+          🛒
+        </span>
+
+        @if (cartCount > 0) {
+
+          <span
+            class="absolute
+                   -top-1
+                   -right-1
+                   min-w-5
+                   h-5
+                   px-1
+                   rounded-full
+                   bg-indigo-600
+                   text-white
+                   text-xs
+                   font-bold
+                   flex
+                   items-center
+                   justify-center"
+          >
+            {{ cartCount }}
+          </span>
+
+        }
+
+      </a>
+
+
+      <!-- Hamburger -->
+
+      <button
+        type="button"
+        (click)="toggleMobileMenu()"
+        class="w-10
+               h-10
+               rounded-full
+               flex
+               items-center
+               justify-center
+               hover:bg-gray-100
+               cursor-pointer
+               text-xl"
+        aria-label="Toggle navigation menu"
+        [attr.aria-expanded]="mobileMenuOpen"
+      >
+
+        @if (mobileMenuOpen) {
+          ✕
+        } @else {
+          ☰
+        }
+
+      </button>
 
     </div>
 
   </div>
+
+
+  <!-- ===================================================== -->
+  <!-- MOBILE MENU -->
+  <!-- ===================================================== -->
+
+  @if (mobileMenuOpen) {
+
+    <div
+      class="lg:hidden
+             border-t
+             border-gray-100
+             bg-white
+             px-4
+             py-5"
+    >
+
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Mobile search -->
+
+        <div
+          class="flex
+                 items-center
+                 h-11
+                 border
+                 border-gray-200
+                 rounded-full
+                 px-4
+                 mb-5"
+        >
+
+          <span class="text-gray-400 mr-2">
+            🔍
+          </span>
+
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+            placeholder="Search products"
+            class="flex-1
+                   min-w-0
+                   bg-transparent
+                   text-sm
+                   outline-none"
+          />
+
+          @if (searchTerm) {
+
+            <button
+              type="button"
+              (click)="clearSearch()"
+              class="text-gray-400
+                     cursor-pointer"
+            >
+              ✕
+            </button>
+
+          }
+
+        </div>
+
+
+        <!-- Mobile links -->
+
+        <div
+          class="flex
+                 flex-col
+                 gap-1"
+        >
+
+          <a
+            routerLink="/home"
+            routerLinkActive="mobile-link-active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            (click)="closeMobileMenu()"
+            class="mobile-nav-link"
+          >
+            Home
+          </a>
+
+          <a
+            routerLink="/products"
+            routerLinkActive="mobile-link-active"
+            (click)="closeMobileMenu()"
+            class="mobile-nav-link"
+          >
+            Products
+          </a>
+
+          <a
+            routerLink="/about"
+            routerLinkActive="mobile-link-active"
+            (click)="closeMobileMenu()"
+            class="mobile-nav-link"
+          >
+            About
+          </a>
+
+          <a
+            routerLink="/cart"
+            (click)="closeMobileMenu()"
+            class="mobile-nav-link"
+          >
+            🛒 Cart
+            @if (cartCount > 0) {
+              <span class="text-indigo-600">
+                ({{ cartCount }})
+              </span>
+            }
+          </a>
+
+          <a
+            routerLink="/login"
+            (click)="closeMobileMenu()"
+            class="mt-3
+                   w-full
+                   h-11
+                   flex
+                   items-center
+                   justify-center
+                   rounded-full
+                   bg-indigo-600
+                   text-white
+                   font-semibold
+                   hover:bg-indigo-700
+                   transition"
+          >
+            Login
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  }
 
 </nav>

@@ -22,11 +22,11 @@ export class Login {
     private router: Router
   ) {}
 
-  login(): void {
+  async login(): Promise<void> {
 
     this.errorMessage = '';
 
-    const success = this.authService.login(
+    const success = await this.authService.login(
       this.email,
       this.password
     );

@@ -1,140 +1,305 @@
 <div
   [ngStyle]="{ opacity: inStock ? 1 : 0.65 }"
-  class="bg-white rounded-2xl pb-4 overflow-hidden border border-gray-200
-         hover:-translate-y-1 transition duration-300"
   appHighlight
+  class="group
+         w-full
+         bg-white
+         rounded-3xl
+         overflow-hidden
+         border border-gray-200
+         shadow-sm
+         hover:shadow-xl
+         hover:-translate-y-1
+         transition-all duration-300"
 >
 
-  <!-- Product Image -->
+  <!-- ===================================================== -->
+  <!-- IMAGE -->
+  <!-- ===================================================== -->
+
   <div
-    class="h-56 flex items-center justify-center mb-4 cursor-pointer"
     [routerLink]="['/products', productId]"
+    class="relative
+           h-60
+           sm:h-64
+           lg:h-72
+           bg-gray-50
+           flex
+           items-center
+           justify-center
+           p-6
+           cursor-pointer
+           overflow-hidden"
   >
 
+    <!-- Stock -->
+
+    <span
+      class="absolute
+             top-4
+             left-4
+             z-10
+             px-3
+             py-1.5
+             rounded-full
+             text-xs
+             font-semibold"
+      [ngClass]="{
+        'bg-green-100 text-green-700': inStock,
+        'bg-red-100 text-red-600': !inStock
+      }"
+    >
+      {{ inStock ? '✓ In Stock' : 'Out of Stock' }}
+    </span>
+
+
+    <!-- Image -->
+
     <img
-      class="max-h-52 max-w-full object-contain"
       [src]="imageUrl"
       [alt]="name"
+      class="max-h-52
+             sm:max-h-56
+             lg:max-h-60
+             max-w-full
+             object-contain
+             group-hover:scale-105
+             transition-transform
+             duration-500"
     />
 
   </div>
 
 
-  <!-- Product Name -->
-  <h3
-    class="text-lg font-medium text-gray-900 cursor-pointer hover:text-indigo-600"
-    [routerLink]="['/products', productId]"
-  >
-    {{ name | uppercase }}
-  </h3>
+  <!-- ===================================================== -->
+  <!-- INFORMATION -->
+  <!-- ===================================================== -->
 
+  <div class="p-5 sm:p-6">
 
-  <!-- Stock Status -->
-  <p
-    class="stock-badge"
-    [ngClass]="{
-      'available': inStock,
-      'out-of-stock': !inStock
-    }"
-  >
-    {{ inStock ? 'In Stock' : 'Out of Stock' }}
-  </p>
+    <!-- Category -->
 
-
-  <!-- Price -->
-  <p class="text-lg text-gray-500 mt-1">
-    {{ priceInLkr | currency:'LKR':'Rs. ':'1.0-0' }}
-  </p>
-
-
-  <!-- Delivery Total -->
-  <p class="text-gray-400 text-xs">
-    Total incl. delivery:
-    Rs. {{ totalInLkr | number:'1.0-0' }}
-  </p>
-
-
-  <!-- Product Description -->
-  <p class="text-gray-500 text-xs text-center mt-3 px-2">
-
-    @if (showFullDescription) {
-
-      {{ description }}
-
-    } @else {
-
-      {{ description | shortText }}
-
-    }
-
-  </p>
-
-
-  <!-- View More / View Less -->
-  @if (description.length > 20) {
-
-    <button
-      (click)="toggleDescription()"
-      class="text-xs text-indigo-500 hover:text-indigo-600
-             mt-1 cursor-pointer"
+    <p
+      class="text-xs
+             uppercase
+             tracking-widest
+             font-semibold
+             text-indigo-500
+             mb-2"
     >
-      {{ showFullDescription ? 'View less' : 'View more' }}
-    </button>
-
-  }
+      {{ productCategory }}
+    </p>
 
 
-  <!-- Product Details Link -->
-  <div class="text-center mt-2">
+    <!-- Name -->
 
-    <a
+    <h3
       [routerLink]="['/products', productId]"
-      class="text-xs text-indigo-500 hover:text-indigo-700 cursor-pointer"
+      class="text-lg
+             sm:text-xl
+             font-semibold
+             text-gray-900
+             leading-tight
+             cursor-pointer
+             hover:text-indigo-600
+             transition"
     >
-      View product
-    </a>
-
-  </div>
+      {{ name | uppercase }}
+    </h3>
 
 
-  <!-- Add To Cart -->
-  @if (inStock) {
+    <!-- Description -->
 
-    <div class="flex items-center justify-center gap-2 mt-4">
+    <div class="mt-3 min-h-[48px]">
 
-      <!-- Quantity -->
-      <input
-        #qtyInput
-        type="number"
-        value="1"
-        min="1"
-        max="10"
-        class="w-14 text-center text-sm
-               border border-gray-200
-               rounded-full py-1 outline-none"
-      />
+      @if (showFullDescription) {
 
+        <p class="text-sm text-gray-500 leading-6">
+          {{ description }}
+        </p>
 
-      <!-- Add To Cart -->
-      <button
-        class="inline-flex items-center gap-1.5
-               border text-sm text-gray-500
-               border-gray-200 hover:bg-gray-100
-               transition cursor-pointer
-               px-5 py-1 rounded-full"
-        (click)="notifyAddToCart(qtyInput.value)"
-      >
+      } @else {
 
-        🛒
+        <p class="text-sm text-gray-500 leading-6">
+          {{ description | shortText }}
+        </p>
 
-        <span>
-          Add to cart
-        </span>
-
-      </button>
+      }
 
     </div>
 
-  }
+
+    @if (description.length > 20) {
+
+      <button
+        type="button"
+        (click)="toggleDescription()"
+        class="mt-2
+               text-sm
+               font-medium
+               text-indigo-600
+               hover:text-indigo-800
+               cursor-pointer"
+      >
+        {{ showFullDescription ? 'View less ↑' : 'View more ↓' }}
+      </button>
+
+    }
+
+
+    <!-- ================================================= -->
+    <!-- PRICE -->
+    <!-- ================================================= -->
+
+    <div class="mt-5">
+
+      <p
+        class="text-xl
+               sm:text-2xl
+               font-bold
+               text-gray-900"
+      >
+        {{ priceInLkr | currency:'LKR':'Rs. ':'1.0-0' }}
+      </p>
+
+      <p class="text-xs text-gray-400 mt-1">
+
+        Total incl. delivery:
+
+        <span class="font-medium text-gray-500">
+          Rs. {{ totalInLkr | number:'1.0-0' }}
+        </span>
+
+      </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- VIEW PRODUCT -->
+    <!-- ================================================= -->
+
+    <a
+      [routerLink]="['/products', productId]"
+      class="flex
+             items-center
+             justify-center
+             w-full
+             mt-5
+             h-11
+             rounded-xl
+             border
+             border-gray-200
+             text-sm
+             font-medium
+             text-gray-700
+             hover:bg-gray-50
+             hover:border-gray-300
+             transition"
+    >
+      View product
+      <span class="ml-2">→</span>
+    </a>
+
+
+    <!-- ================================================= -->
+    <!-- CART -->
+    <!-- ================================================= -->
+
+    @if (inStock) {
+
+      <div
+        class="flex
+               items-center
+               gap-2
+               sm:gap-3
+               mt-3"
+      >
+
+        <!-- Quantity -->
+
+        <div
+          class="w-16
+                 sm:w-20
+                 h-11
+                 border
+                 border-gray-200
+                 rounded-xl
+                 bg-gray-50
+                 flex
+                 items-center
+                 justify-center"
+        >
+
+          <input
+            #qtyInput
+            type="number"
+            value="1"
+            min="1"
+            max="10"
+            aria-label="Quantity"
+            class="w-full
+                   h-full
+                   text-center
+                   text-sm
+                   font-medium
+                   bg-transparent
+                   outline-none"
+          />
+
+        </div>
+
+
+        <!-- Add cart -->
+
+        <button
+          type="button"
+          (click)="notifyAddToCart(qtyInput.value)"
+          class="flex-1
+                 h-11
+                 flex
+                 items-center
+                 justify-center
+                 gap-2
+                 rounded-xl
+                 bg-indigo-600
+                 text-white
+                 text-sm
+                 font-semibold
+                 hover:bg-indigo-700
+                 active:scale-95
+                 transition
+                 cursor-pointer"
+        >
+
+          🛒
+
+          <span>
+            Add to cart
+          </span>
+
+        </button>
+
+      </div>
+
+    } @else {
+
+      <button
+        disabled
+        class="w-full
+               mt-3
+               h-11
+               rounded-xl
+               bg-gray-100
+               text-gray-400
+               text-sm
+               font-semibold"
+      >
+        Currently unavailable
+      </button>
+
+    }
+
+  </div>
 
 </div>

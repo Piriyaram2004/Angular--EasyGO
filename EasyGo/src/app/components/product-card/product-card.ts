@@ -26,13 +26,13 @@ import { ProductService } from '../../services/product-service';
     UpperCasePipe,
     CurrencyPipe,
     DecimalPipe,
-    Highlight,
-    ShortTextPipe,
     RouterLink,
+    Highlight,
+    ShortTextPipe
   ],
 
   templateUrl: './product-card.html',
-  styleUrl: './product-card.css',
+  styleUrl: './product-card.css'
 })
 export class ProductCard {
 
@@ -48,29 +48,69 @@ export class ProductCard {
 
   @Input() description = '';
 
+  @Input() productCategory = '';
+
   showFullDescription = false;
 
   readonly usdToLkr = 320;
 
-  constructor(private productService: ProductService) {}
+  constructor(
+    private productService: ProductService
+  ) {}
 
-  get priceInLkr() {
+
+  get priceInLkr(): number {
+
     return this.price * this.usdToLkr;
+
   }
 
-  get totalInLkr() {
-    return (this.price + 50) * this.usdToLkr;
+
+  get deliveryInLkr(): number {
+
+    return 50 * this.usdToLkr;
+
   }
 
-  toggleDescription() {
-    this.showFullDescription = !this.showFullDescription;
+
+  get totalInLkr(): number {
+
+    return this.priceInLkr +
+           this.deliveryInLkr;
+
   }
 
-  notifyAddToCart(qty: string) {
+
+  toggleDescription(): void {
+
+    this.showFullDescription =
+      !this.showFullDescription;
+
+  }
+
+
+  notifyAddToCart(qty: string): void {
+
+    const quantity = Number(qty);
+
+    if (
+      !Number.isFinite(quantity) ||
+      quantity < 1
+    ) {
+
+      return;
+
+    }
+
+    const safeQuantity =
+      Math.min(
+        Math.floor(quantity),
+        10
+      );
 
     this.productService.addToCart(
       this.name,
-      Number(qty) || 1
+      safeQuantity
     );
 
   }
