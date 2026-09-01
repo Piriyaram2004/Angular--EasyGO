@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EasyGo.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b44ea4a2f5f6be025e11a934d645ab27f66fcde5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+07a7ff83ca89e40db10fe386787b39dc927c0949")]
 [assembly: System.Reflection.AssemblyProductAttribute("EasyGo.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EasyGo.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
